@@ -245,6 +245,10 @@ const data = [
     });
   };
 
+  const sortUpToDown = (field) => {
+    data.sort((a, b) => (a[field] > b[field] ? 1 : -1));
+  };
+
   const init = (selectorApp, title) => {
     const app = document.querySelector(selectorApp);
     const phoneBook = renderPhoneBook(app, title);
@@ -253,7 +257,7 @@ const data = [
       logo,
       btnAdd,
       formOverlay,
-      form,
+      // form,
       btnDel,
       thead,
     } =
@@ -289,14 +293,8 @@ const data = [
     thead.addEventListener('click', e => {
       if (e.target.closest('.sort')) {
         const sortFiled = e.target.closest('.sort').dataset.sort;
-        switch (sortFiled) {
-          case 'name':
-            data.sort((a, b) => (a.name > b.name ? 1 : -1));
-            break;
-          case 'surname':
-            data.sort((a, b) => (a.surname > b.surname ? 1 : -1));
-            break;
-        }
+
+        sortUpToDown(sortFiled);
         app.innerHTML = '';
         init(selectorApp, title);
       }
