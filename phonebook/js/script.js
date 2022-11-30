@@ -1,34 +1,36 @@
 'use strict';
 
-const data = [
-  {
-    name: 'Иван',
-    surname: 'Петров',
-    phone: '+79514545454',
-  },
-  {
-    name: 'Игорь',
-    surname: 'Семёнов',
-    phone: '+79999999999',
-  },
-  {
-    name: 'Семён',
-    surname: 'Иванов',
-    phone: '+79800252525',
-  },
-  {
-    name: 'Мария',
-    surname: 'Попова',
-    phone: '+79876543210',
-  },
-];
-
-
 {
+  const getStorage = key => {
+    const result = JSON.parse(localStorage.getItem(key));
+    if (result) {
+      return result;
+    } else {
+      return [];
+    }
+  };
+
+  const setStorage = (key, argObj) => {
+    const newVal = getStorage(key);
+    newVal.push(argObj);
+    localStorage.setItem(key, JSON.stringify(newVal));
+  };
+
+  const removeStorage = phoneToDel => {
+    const newWal = getStorage('phoneData');
+    const filteredArray = newWal.filter(value => value.phone != phoneToDel);
+    localStorage.setItem('phoneData', JSON.stringify(filteredArray));
+  };
+
+
+
+  const data = getStorage('phoneData');
+
   const addContactData = contact => {
     data.push(contact);
-    console.log(data);
   };
+
+  // localStorage.clear();
 
 
   const createContainer = () => {
@@ -103,7 +105,7 @@ const data = [
             <th class='delete'> Удалить </th>
             <th class="sort" data-sort="name">Имя</th>
             <th class="sort" data-sort="surname">Фамилия</th>
-            <th>Телефон</th>
+            <th class="phone_num">Телефон</th>
             <th></th>
         </tr>
     `);
@@ -203,6 +205,7 @@ const data = [
   const createRow = ({name: firstName, surname, phone}) => {
     const tr = document.createElement('tr');
     tr.classList.add('contact');
+    tr.dataset.phone = phone;
     const tdDel = document.createElement('td');
     const buttonDel = document.createElement('button');
     tdDel.append(buttonDel);
@@ -286,6 +289,7 @@ const data = [
 
     list.addEventListener('click', e => {
       if (e.target.closest('.del-icon')) {
+        removeStorage(e.target.closest('.contact').dataset.phone);
         e.target.closest('.contact').remove();
       }
     });
@@ -304,6 +308,7 @@ const data = [
       addContactData(newContact);
       form.reset();
       closeModal();
+      setStorage('phoneData', newContact);
     });
   };
 
