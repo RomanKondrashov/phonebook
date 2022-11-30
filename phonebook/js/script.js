@@ -23,7 +23,6 @@
   };
 
 
-
   const data = getStorage('phoneData');
 
   const addContactData = contact => {
@@ -314,6 +313,8 @@
 
   const sortUpToDown = (field) => {
     data.sort((a, b) => (a[field] > b[field] ? 1 : -1));
+    localStorage.removeItem('sortField');
+    setStorage('sortField', field);
   };
 
   const init = (selectorApp, title) => {
@@ -328,6 +329,10 @@
       btnDel,
       thead,
     } = renderPhoneBook(app, title);
+
+    if (getStorage('sortField')) {
+      sortUpToDown(getStorage('sortField'));
+    }
 
     // функционал
     const allRow = renderContacts(list, data);
