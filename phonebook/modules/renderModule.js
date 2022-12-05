@@ -14,7 +14,7 @@ const {
 } = createModule;
 
 
-const renderPhoneBook = (app, title) => {
+export const renderPhoneBook = (app, title) => {
   const header = createHeader();
   const logo = createLogo(title);
   const main = createMain();
@@ -50,14 +50,9 @@ const renderPhoneBook = (app, title) => {
   };
 };
 
-const renderContacts = (elem, data) => {
+export const renderContacts = (elem, data) => {
   const allRow = data.map(createRow);
   elem.append(...allRow);
   return allRow;
 };
 
-
-export default {
-  renderPhoneBook,
-  renderContacts,
-};

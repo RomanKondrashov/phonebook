@@ -1,6 +1,9 @@
 import controlModule from '/phonebook/modules/controlModule.js';
-import renderModule from '/phonebook/modules/renderModule.js';
-import storageModule from '/phonebook/modules/storageModule.js';
+import {
+  renderPhoneBook,
+  renderContacts,
+} from '/phonebook/modules/renderModule.js';
+import * as storageModule from '/phonebook/modules/storageModule.js';
 
 const {
   hoverRow,
@@ -10,10 +13,6 @@ const {
   sortUpToDown,
 } = controlModule;
 
-const {
-  renderPhoneBook,
-  renderContacts,
-} = renderModule;
 
 const {
   getStorage,
