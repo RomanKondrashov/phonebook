@@ -1,0 +1,1 @@
+import storageModule from '/phonebook/modules/storageModule.js';
